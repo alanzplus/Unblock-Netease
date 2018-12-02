@@ -7,8 +7,9 @@
  */
 
 plugins {
-    // Apply the scala plugin to add support for Scala
+    idea
     scala
+    application
 }
 
 repositories {
@@ -20,6 +21,10 @@ repositories {
 dependencies {
     // Use Scala 2.12 in our library project
     implementation("org.scala-lang:scala-library:2.12.7")
+    implementation("com.squareup.okhttp3:okhttp:3.12.0")
+    implementation("org.apache.logging.log4j:log4j-api:2.11.1")
+    implementation("org.apache.logging.log4j:log4j-core:2.11.1")
+    implementation("org.jsoup:jsoup:1.9.2")
 
     // Use Scalatest for testing our library
     testImplementation("junit:junit:4.12")
@@ -27,4 +32,8 @@ dependencies {
 
     // Need scala-xml at test runtime
     testRuntimeOnly("org.scala-lang.modules:scala-xml_2.12:1.1.1")
+}
+
+application {
+    mainClassName = "com.alanzplus.unblock.netease.UnblockNetEase"
 }
