@@ -13,8 +13,23 @@ import scala.collection.JavaConverters._
 object HtmlResponseParser {
   private[this] val logger = LogManager.getLogger(HtmlResponseParser.this.getClass)
 
-  def parseServers(html: String): List[Map[String, String]] = {
-    null
+  /**
+    * Parse response html and return a list of dns servers.
+    *
+    * Example,
+    *
+    * [
+    * {"name": "西藏[电信]", "id": 19048575, "ip": "2xeIg7Rn7vKUx4bk7UV|EA==", "state": 0, "trytime": 0},
+    * {"name": "山东[联通]", "id": 19048576, "ip": "Rv90/Ksj1L5uT4T9vkFqHw==", "state": 0, "trytime": 0},
+    * ...
+    * ]
+    */
+  def getDnsServers(html: String): List[Map[String, String]] = {
+    val dom = parseAsDom(html)
+    val serverNames = parseServerNames(dom)
+    parseServerIdIpList(dom)
+      .filter(_.get("id").exists(serverNames.contains))
+      .map(e => e.+(("name", serverNames(e("id")))))
   }
 
   /**
