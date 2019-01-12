@@ -24,7 +24,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:3.12.0")
     implementation("org.apache.logging.log4j:log4j-api:2.11.1")
     implementation("org.apache.logging.log4j:log4j-core:2.11.1")
-    implementation("org.jsoup:jsoup:1.9.2")
+    implementation("org.jsoup:jsoup:1.11.3")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.9.8")
 
     // Use Scalatest for testing our library
     testImplementation("junit:junit:4.12")
