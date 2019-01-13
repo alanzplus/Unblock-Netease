@@ -35,8 +35,6 @@ class HtmlResponseParserTest extends FunSuite with Matchers {
 
     val list = HtmlResponseParser.getDnsServers(source)
 
-    println(list)
-
     list.size shouldBe 2
     list should contain only(
       Map("name" -> "西藏[电信]", "id" -> "19048575", "ip" -> "2xeIg7Rn7vKUx4bk7UV|EA==", "state" -> "0", "trytime" -> "0"),

@@ -2,8 +2,8 @@ package com.alanzplus.unblock.netease.dns.chinaz
 
 import java.util
 
+import com.alanzplus.unblock.netease.Utility
 import com.fasterxml.jackson.core.`type`.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.logging.log4j.LogManager
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
@@ -61,7 +61,6 @@ object HtmlResponseParser {
     * ]
     */
   def parseServerIdIpList(rootDom: Document): List[Map[String, String]] = {
-
     val listJsonString = rootDom.select("script").asScala.toList
       .map(_.html())
       .filter(!_.isEmpty)
@@ -79,8 +78,7 @@ object HtmlResponseParser {
       return List.empty
     }
 
-
-    new ObjectMapper().readValue(listJsonString.head, new TypeReference[util.ArrayList[util.HashMap[String, String]]] {})
+    Utility.objectMapper.readValue(listJsonString.head, new TypeReference[util.ArrayList[util.HashMap[String, String]]] {})
       .asInstanceOf[util.ArrayList[util.HashMap[String, String]]]
       .asScala
       .toList
