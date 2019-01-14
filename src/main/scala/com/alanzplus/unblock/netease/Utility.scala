@@ -7,4 +7,6 @@ object Utility {
   val objectMapper = new ObjectMapper().registerModule(DefaultScalaModule);
 
   def toPrettyJson(obj: Any): String = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj)
+
+  def consoleWritePrettyJson(obj : Any) = println(toPrettyJson(obj))
 }
