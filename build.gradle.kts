@@ -26,6 +26,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:2.11.1")
     implementation("org.jsoup:jsoup:1.11.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.9.8")
+    implementation("com.fasterxml.jackson.module:jackson-module-scala_2.12:2.9.8")
 
     // Use Scalatest for testing our library
     testImplementation("junit:junit:4.12")

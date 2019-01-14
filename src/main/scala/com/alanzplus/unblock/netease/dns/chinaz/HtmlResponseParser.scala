@@ -4,6 +4,7 @@ import java.util
 
 import com.alanzplus.unblock.netease.Utility
 import com.fasterxml.jackson.core.`type`.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.logging.log4j.LogManager
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
@@ -24,7 +25,7 @@ object HtmlResponseParser {
     * ...
     * ]
     */
-  def getDnsServers(html: String): List[Map[String, String]] = {
+  def getDnsServers(html: String): Seq[Map[String, String]] = {
     val dom = parseAsDom(html)
     val serverNames = parseServerNames(dom)
     parseServerIdIpList(dom)
@@ -60,7 +61,7 @@ object HtmlResponseParser {
     * ...
     * ]
     */
-  def parseServerIdIpList(rootDom: Document): List[Map[String, String]] = {
+  def parseServerIdIpList(rootDom: Document): Seq[Map[String, String]] = {
     val listJsonString = rootDom.select("script").asScala.toList
       .map(_.html())
       .filter(!_.isEmpty)
@@ -78,11 +79,7 @@ object HtmlResponseParser {
       return List.empty
     }
 
-    Utility.objectMapper.readValue(listJsonString.head, new TypeReference[util.ArrayList[util.HashMap[String, String]]] {})
-      .asInstanceOf[util.ArrayList[util.HashMap[String, String]]]
-      .asScala
-      .toList
-      .map(_.asScala.toMap)
+    Utility.objectMapper.readValue(listJsonString.head, new TypeReference[Seq[Map[String, String]]] {})
   }
 
   def parseAsDom(html: String) = {

@@ -1,6 +1,5 @@
 package com.alanzplus.unblock.netease.dns.chinaz
 
-import java.util
 import java.util.concurrent.{Callable, Executors, TimeUnit}
 
 import com.alanzplus.unblock.netease.Utility
@@ -9,14 +8,12 @@ import com.fasterxml.jackson.core.`type`.TypeReference
 import okhttp3._
 import org.apache.logging.log4j.LogManager
 
-import scala.collection.JavaConverters._
-
 class ChinaZ(concurrency: Int = 5) extends DnsLookup {
   private[this] val logger = LogManager.getLogger(ChinaZ.this.getClass)
   private[this] val httpClient = new OkHttpClient
   private[this] val executors = Executors.newFixedThreadPool(concurrency)
 
-  override def lookup(domainName: String): List[String] = {
+  override def lookup(domainName: String): Seq[String] = {
     val url = s"http://tool.chinaz.com/dns/?type=1&host=$domainName&ip="
     logger.info(s"Requesting ${url}")
     val response = httpClient.newCall(new Request.Builder().url(url).build()).execute()
@@ -35,7 +32,7 @@ class ChinaZ(concurrency: Int = 5) extends DnsLookup {
     }
       .map(executors.submit(_))
       .flatMap(future => {
-        var res: List[String] = List.empty
+        var res: Seq[String] = List.empty
         try {
           res = future.get(10, TimeUnit.SECONDS)
         } catch {
@@ -90,8 +87,8 @@ class ChinaZ(concurrency: Int = 5) extends DnsLookup {
     * ]
     * }
     */
-  class GetIpTask(dnsServer: Map[String, String], lookupHost: String, idx: Int, total: Int) extends Callable[List[String]] {
-    override def call(): List[String] = {
+  class GetIpTask(dnsServer: Map[String, String], lookupHost: String, idx: Int, total: Int) extends Callable[Seq[String]] {
+    override def call(): Seq[String] = {
 
       val response = queryDnsServer
       if (!response.isSuccessful) {
@@ -106,19 +103,16 @@ class ChinaZ(concurrency: Int = 5) extends DnsLookup {
         .map(_ ("result"))
     }
 
-    private def toScalaListOfMap(alist: Any) = {
-      alist.asInstanceOf[util.ArrayList[util.HashMap[String, String]]].asScala.toList.map(_.asScala.toMap[String, String])
+    private def toScalaListOfMap(alist: Object) = {
+      alist.asInstanceOf[Seq[Map[String, String]]]
     }
 
-    private def getAsScalaMap(response: String) = {
-      Utility.objectMapper.readValue(response, new TypeReference[util.HashMap[String, Object]]() {})
-        .asInstanceOf[util.HashMap[String, Object]]
-        .asScala
-        .toMap
+    private def getAsScalaMap(response: String): Map[String, Object] = {
+      Utility.objectMapper.readValue(response, new TypeReference[Map[String, Object]]() {})
     }
 
     private def jsonifyResponse(responseBody: String) = {
-      val trimResponse = responseBody.substring(1, responseBody.size - 1) // remove beginning "(" and ending ")"
+      val trimResponse = responseBody.substring(1, responseBody.size - 1).trim // remove beginning "(" and ending ")"
       if (!trimResponse.contains("\"state\"")) {
         trimResponse
           .replaceAll("state", "\"state\"")
