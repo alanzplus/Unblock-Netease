@@ -52,3 +52,22 @@ Running `./run-and-replace-host.sh` will backup your original `/etc/hosts` to `/
 with the resolved one.
 
 Note that you should run the script with `sudo`
+
+### Rebuild Artifacts
+This repo comes with pre-build artifacts in directory `build/install`. You can rebuild it by
+
+```bash
+./gradlew clean install
+```
+
+or
+
+```bash
+resolved-ip-host rebuild
+```
+
+or 
+
+```bash
+resolve-ips.sh rebuild
+```
