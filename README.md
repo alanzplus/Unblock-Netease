@@ -1,13 +1,29 @@
 # Unblock Netease Music (Unblock 网易云音乐）
 
-Unblock the access to Netease(网易云音乐).
+Unblock oversea access to [Netease Music (网易云音乐)](https://music.163.com/), a freemium music streaming service in China.
 
-This repo resolves the domain names needed for accessing Netease Music outside China.
+## How to Use
 
-And it is tested with Netease Music Application (Mac Version).
+### Resolve Domain Names and Append to `/etc/host`
 
-## Mechanism
-To access Netease we need to resolve the following domain names
+`./scripts/resolve-and-append.sh` backups your original `/etc/hosts` to `/etc/host-backup` and appends content of `./scripts/resolved` to `/etc/hosts`
+
+Then you should be able to access the restricted contents using Netease Music application or browser.
+
+### Resolve Domain Names Only
+Run `./scripts/resolve-domain-names.sh` to resolve the domains names and outputs resolved domains `./scripts/resolved`.
+
+For more configuration, please check the script.
+
+### Rebuild Artifacts
+This repo comes with pre-build artifacts in directory `build/install`. You can rebuild it by
+
+```bash
+./gradlew clean install
+```
+
+## Under the Hood
+To access Netease Music we need to resolve the following domain names
 
 ```
 music.163.com
@@ -19,9 +35,11 @@ m10.music.126.net
 img3.126.net
 ```
 
-For `music.163.com` we can simply use the ip provided by UnblockYouku, which is `158.69.209.100`
+For `music.163.com` we can simply use the `158.69.209.100` provided by UnblockYouku.
 
-The program will automatically resolve the rest of domain names by looking up ChinaZ website and finally generate a `/etc/hosts` like file,
+The program automatically resolves the rest of domain names by looking up ChinaZ website
+
+Then it generates a file `resolved`` of the same format as `/etc/hosts`
 
 for example,
 
@@ -38,36 +56,3 @@ for example,
 and we can append these entry into out system's `/etc/hosts`.
 
 Then after restarting the Netease Music Application, it should be able to access the restricted content.
-
-## How to Use
-
-### Resolve IPS
-Run `resolve-ips.sh` to resolve the domains names and it will generate a file called `resolved-ip-host`.
-
-For more configuration, please check the script.
-
-### Resolve IPs and Append them to `/etc/host`
-
-Running `./run-and-replace-host.sh` will backup your original `/etc/hosts` to `/etc/host-backup` and replace it
-with the resolved one.
-
-Note that you should run the script with `sudo`
-
-### Rebuild Artifacts
-This repo comes with pre-build artifacts in directory `build/install`. You can rebuild it by
-
-```bash
-./gradlew clean install
-```
-
-or
-
-```bash
-resolved-ip-host rebuild
-```
-
-or 
-
-```bash
-resolve-ips.sh rebuild
-```
