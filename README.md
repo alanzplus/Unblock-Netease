@@ -35,8 +35,6 @@ m10.music.126.net
 img3.126.net
 ```
 
-For `music.163.com` we can simply use the `158.69.209.100` provided by UnblockYouku.
-
 The program automatically resolves the rest of domain names by looking up ChinaZ website
 
 Then it generates a file `resolved`` of the same format as `/etc/hosts`
@@ -44,13 +42,13 @@ Then it generates a file `resolved`` of the same format as `/etc/hosts`
 for example,
 
 ```
-158.69.209.100 music.163.com
-58.20.164.88 img3.126.net
-183.62.114.251 m10.music.126.net
-14.215.100.233 p2.music.126.net
-14.215.100.233 p1.music.126.net
-14.215.100.233 p3.music.126.net
-14.215.100.233 p4.music.126.net
+210.66.47.82 img3.126.net
+112.123.33.135 m10.music.126.net
+223.252.199.67 music.163.com
+114.112.160.234 p2.music.126.net
+110.53.75.73 p1.music.126.net
+110.53.75.73 p3.music.126.net
+110.53.75.73 p4.music.126.net
 ```
 
 and we can append these entry into out system's `/etc/hosts`.
