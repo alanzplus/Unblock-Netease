@@ -11,9 +11,11 @@ fi
 
 readonly output="${script_dir}/resolved"
 
-readonly domainsToLookup='p1.music.126.net p2.music.126.net p3.music.126.net p4.music.126.net m10.music.126.net img3.126.net music.163.com'
+readonly domainsToLookup='p1.music.126.net p2.music.126.net p3.music.126.net p4.music.126.net m10.music.126.net img3.126.net'
 
 JAVA_OPTS="
+-Dmusic163DomainName=music.163.com
+-DunblockYouKuIp=158.69.209.100
 -Ddns.query.concurrency=10
 -Ddns.query.timeoutIntSeconds=10
 -Dping.concurrency=30

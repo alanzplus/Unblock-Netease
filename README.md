@@ -35,7 +35,9 @@ m10.music.126.net
 img3.126.net
 ```
 
-The program automatically resolves the rest of domain names by looking up ChinaZ website
+For `music.163.com` we use the IP provided by UnblockYouku.
+
+And for the rest, the program automatically resolves the rest of domain names by looking up ChinaZ website
 
 Then it generates a file `resolved`` of the same format as `/etc/hosts`
 
@@ -44,7 +46,6 @@ for example,
 ```
 210.66.47.82 img3.126.net
 112.123.33.135 m10.music.126.net
-223.252.199.67 music.163.com
 114.112.160.234 p2.music.126.net
 110.53.75.73 p1.music.126.net
 110.53.75.73 p3.music.126.net
