@@ -1,4 +1,4 @@
-# Unblock Netease Music (Unblock 网易云音乐）
+# :notes:	Unblock Netease Music (Unblock 网易云音乐）
 
 Unblock oversea access to [Netease Music (网易云音乐)](https://music.163.com/), a freemium music streaming service in China.
 
@@ -9,6 +9,12 @@ Unblock oversea access to [Netease Music (网易云音乐)](https://music.163.co
 `./scripts/resolve-and-append.sh` backups your original `/etc/hosts` to `/etc/host-backup` and appends content of `./scripts/resolved` to `/etc/hosts`
 
 Then you should be able to access the restricted contents using Netease Music application or browser.
+
+#### Tips
+It looks like the restriction to domain `music.163.com` is session based. In other words, once you have gotten access to it, your session will be valid for a period of time even you remove (or comment out) `music.163.com` entry in `/etc/hosts`.
+
+After having access, it is better to comment out `music.163.com` for higher speed because the DNS from Unblock Youku suffers high delay time to time.
+
 
 ### Resolve Domain Names Only
 Run `./scripts/resolve-domain-names.sh` to resolve the domains names and outputs resolved domains `./scripts/resolved`.
@@ -39,7 +45,7 @@ For `music.163.com` we use the IP provided by UnblockYouku.
 
 And for the rest, the program automatically resolves the rest of domain names by looking up ChinaZ website
 
-Then it generates a file `resolved`` of the same format as `/etc/hosts`
+Then it generates a file `resolved` which has the same format as `/etc/hosts`
 
 for example,
 
